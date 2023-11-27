@@ -1,0 +1,27 @@
+.nhrrob-popular-plugins {
+    width: 60%;
+    margin: auto;
+}
+.nhrrob-popular-plugins .align-center {
+    text-align: center;
+}
+
+.nhrrob-popular-plugins .align-left {
+    text-align: left;
+}
+
+.nhrrob-popular-plugins .align-right {
+    text-align: right;
+}
+
+.nhrrob-popular-plugins .nhrrob-popular-plugins-old {
+    padding-top: 100px;
+}
+
+.nhrrob-popular-plugins .updated-at {
+    float: right;
+}
+
+.nhrrob-popular-plugins .d-none {
+    display: none;
+}

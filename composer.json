@@ -1,0 +1,20 @@
+{
+    "name": "nhrrob/nhrrob-popular-plugins",
+    "description": "Therapists selection Quiz. Provides a form for the user to submit and then automatically matches therapists based on the answers.",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Nhrrob",
+            "email": "admin@admin.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Nhrrob\\NhrrobPopularPlugins\\": "includes/"
+        },
+        "files": [ "includes/functions.php" ]
+    }
+}
