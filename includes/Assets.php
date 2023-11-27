@@ -50,6 +50,10 @@ class Assets {
                 'src'     => RESLAB_POPULAR_PLUGINS_ASSETS . '/css/admin.css',
                 'version' => filemtime( RESLAB_POPULAR_PLUGINS_PATH . '/assets/css/admin.css' )
             ],
+            'nhrrob-popular-plugins-bootstrap' => [
+                'src'     => '//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
+                'version' => false,
+            ],
         ];
     }
 

@@ -57,6 +57,7 @@ class Menu
     public function enqueue_assets()
     {
         wp_enqueue_style('nhrrob-popular-plugins-admin-style');
+        wp_enqueue_style('nhrrob-popular-plugins-bootstrap');
         wp_enqueue_script('nhrrob-popular-plugins-admin-script');
     }
 }

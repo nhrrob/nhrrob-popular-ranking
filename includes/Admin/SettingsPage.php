@@ -44,16 +44,21 @@ class SettingsPage
         <div class="nhrrob-popular-plugins">
             <div class="nhrrob-popular-plugins-latest">
                 <h1 class="align-center"><?php _e('WordPress Popular Plugins', 'nhrrob-popular-plugins') ?></h1>
-                <p class="cache-updated-at-wrap">
-                    <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged={$page}&cache_clear")); ?>"><?php _e('Clear Cache', 'nhrrob-popular-plugins'); ?></a>
-                    <?php $next_page = $page + 1; ?>
-                    <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged={$next_page}")); ?>"><?php _e('Next Page', 'nhrrob-popular-plugins'); ?></a>
-                    <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&all")); ?>"><?php _e('All Pages', 'nhrrob-popular-plugins'); ?></a>
+                <div class="alert alert-primary" role="alert">
                     <?php
                     $updated_at = get_option($transient_name . '_fetched_at');
                     $updated_at = human_time_diff($updated_at, current_time('U'));
                     ?>
-                    <span class="updated-at"> <?php printf(__('Updated at: %s ago.', 'nhrrob-popular-plugins'), $updated_at); ?></span>
+                    <?php printf(__('Updated %s ago.', 'nhrrob-popular-plugins'), $updated_at); ?>
+                </div>
+                <p class="cache-updated-at-wrap">
+                    <?php $this->print_link_button( admin_url( "admin.php?page={$this->page_slug}" ), __('Reload', 'nhrrob-popular-plugins') ); ?>
+                    <?php $this->print_link_button( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ), __('Clear Cache', 'nhrrob-popular-plugins'), 'float: right;' ); ?>
+                    <?php $prev_page = $page - 1 > 0 ? $page - 1 : 1; ?>
+                    <?php $next_page = $page + 1; ?>
+                    <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}"), __('Prev Page', 'nhrrob-popular-plugins') ); ?>
+                    <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$next_page}"), __('Next Page', 'nhrrob-popular-plugins') ); ?>
+                    <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&all"), __('All Pages', 'nhrrob-popular-plugins') ); ?>
                 </p>
                 <div class="nhrrob-main-content">
                     <?php
@@ -137,85 +142,31 @@ class SettingsPage
 
     public function api($loop = 1)
     {
-        $pages = 221;
-
-        $from = 1;
-        $to = 20;
-
-        if (intval($loop) && $loop >= 1 && $loop <= 20) {
-            $from = 20 * ($loop - 1) + 1;
-            $to = $from + 19;
-        }
+        $from_to_value = $this->get_api_loop_from_to_value( $loop );
+        $from   = ! empty( $from_to_value['from'] ) ? intval( $from_to_value['from'] ) : 1;
+        $to     = ! empty( $from_to_value['to'] )   ? intval( $from_to_value['to'] ) : 20;
 
         $popular_plugins_by_username = [];
 
         $transient_name = "{$this->transient_name}_{$loop}";
         $popular_plugins_old = get_transient($transient_name);
 
-        // Top 5000 Popular Plugins
-        // https://developer.wordpress.org/reference/functions/plugins_api/
+        // Top 5000 Popular Plugins: https://developer.wordpress.org/reference/functions/plugins_api/
         for ($page = $from; $page <= $to; $page++) {
             $popular_plugins = $this->plugins_api(
                 'query_plugins',
-                array(
-                    'browse' => 'popular',
-                    'page' => $page,
-                    'per_page' => 250,
-                    'fields' => array(
-                        'downloaded' => false,
-                        'rating' => false,
-                        'description' => false,
-                        'short_description' => false,
-                        'donate_link' => false,
-                        'tags' => false,
-                        'sections' => false,
-                        'homepage' => false,
-                        'added' => false,
-                        'last_updated' => false,
-                        'compatibility' => false,
-                        'tested' => false,
-                        'requires' => false,
-                        'downloadlink' => true,
-                        'requires_plugins' => false,
-                        'versions' => false,
-                        'screenshots' => false,
-                        'active_installs' => true,
-                    )
-                )
+                $this->get_plugins_api_args( $page )
             );
-
+            
             $popular_plugins = !empty($popular_plugins->plugins) ? $popular_plugins->plugins : [];
 
             foreach ($popular_plugins as $index => $popular_plugin) {
-                if ( isset( $popular_plugin->ratings['5'] ) ) {
-                    $this->popular_plugins_stars[ $popular_plugin->slug ] = [
-                        'slug' => $popular_plugin->slug,
-                        'author_profile' => $popular_plugin->author_profile,
-                        'rating5' => $popular_plugin->ratings['5'],
-                        'rating1' => $popular_plugin->ratings['1'],
-                    ];
-                }
-
-                if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
-                    $rank = (250 * ($page - 1)) + ($index + 1);
-                    $popular_plugins_by_username[$popular_plugin->slug] = [
-                        'slug' => $popular_plugin->slug,
-                        'rank' => $rank,
-                        'rank_old' => ! empty( $popular_plugins_old[$popular_plugin->slug]['rank'] ) ? $popular_plugins_old[$popular_plugin->slug]['rank'] : $rank,
-                        'rating5' => ! empty( $popular_plugin->ratings['5'] ) ? $popular_plugin->ratings['5'] : 0,
-                        'rating1' => ! empty( $popular_plugin->ratings['1'] ) ? $popular_plugin->ratings['1'] : 0,
-                        'plugin' => $popular_plugin
-                    ];
-
-                    $this->popular_plugins_stars[ $popular_plugin->slug ]['plugin'] = $popular_plugin;
-                }
+                $this->popular_plugins_stars[ $popular_plugin->slug ] = $this->prepare_popular_plugin_stars( $popular_plugin );
                 
-                // if($popular_plugin->slug === 'embedpress') {
-                //     echo "<pre>";
-                //     print_r($this->popular_plugins_stars);
-                //     print_r($popular_plugins_by_username);
-                //     wp_die('ok');
-                // }
+                if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
+                    $popular_plugins_by_username[ $popular_plugin->slug ] = $this->prepare_popular_plugins_by_username( $popular_plugin, $index, $page, $popular_plugins_old );
+                }
+                // $this->plugin_data_test( $popular_plugin, [ $this->popular_plugins_stars ]);
             }
         }
 
@@ -256,14 +207,147 @@ class SettingsPage
         return apply_filters('plugins_api_result', $res, $action, $args);
     }
 
+    public function get_plugins_api_args( $page = 1 ){
+        $args = array(
+            'browse' => 'popular',
+            'page' => $page,
+            'per_page' => 250,
+            'fields' => array(
+                'downloaded' => false,
+                'rating' => false,
+                'description' => false,
+                'short_description' => false,
+                'donate_link' => false,
+                'tags' => false,
+                'sections' => false,
+                'homepage' => false,
+                'added' => false,
+                'last_updated' => false,
+                'compatibility' => false,
+                'tested' => false,
+                'requires' => false,
+                'downloadlink' => true,
+                'requires_plugins' => false,
+                'versions' => false,
+                'screenshots' => false,
+                'active_installs' => true,
+            )
+        );
+
+        return $args;
+    }
+
+    public function get_api_loop_from_to_value( $loop ){
+        $from = 1;
+        $to = 20;
+
+        if (intval($loop) && $loop >= 1 && $loop <= 20) {
+            $from = 20 * ($loop - 1) + 1;
+            $to = $from + 19;
+        }
+
+        $from_to_value = [
+            'from' => $from,
+            'to' => $to,
+        ];
+
+        return $from_to_value;
+    }
+
+    public function prepare_popular_plugin_stars( $popular_plugin ){
+        if ( isset( $popular_plugin->ratings['5'] ) ) {
+            $popular_plugins_stars = [
+                'slug' => $popular_plugin->slug,
+                'author_profile' => $popular_plugin->author_profile,
+                'rating5' => $popular_plugin->ratings['5'],
+                'rating1' => $popular_plugin->ratings['1'],
+            ];
+        }
+
+        if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
+            $popular_plugins_stars['plugin'] = $popular_plugin;
+        }
+
+        return ! empty( $popular_plugins_stars ) ? $popular_plugins_stars : [];
+    }
+    
+    public function prepare_popular_plugins_by_username( $popular_plugin, $index, $page, $popular_plugins_old ){
+        $rank = (250 * ($page - 1)) + ($index + 1);
+        $rating5 = ! empty( $popular_plugin->ratings['5'] ) ? $popular_plugin->ratings['5'] : 0;
+        $rating1 = ! empty( $popular_plugin->ratings['1'] ) ? $popular_plugin->ratings['1'] : 0;
+
+        $popular_plugins_by_username = [
+            'slug'                  => $popular_plugin->slug,
+            'rank'                  => $rank,
+            'rank_old'              => ! empty( $popular_plugins_old[$popular_plugin->slug]['rank'] ) ? $popular_plugins_old[$popular_plugin->slug]['rank'] : $rank,
+            'rating5'               => $rating5,
+            'rating1'               => $rating1,
+            'rating5_old'           => ! empty( $popular_plugins_old[$popular_plugin->slug]['rating5'] ) ? $popular_plugins_old[$popular_plugin->slug]['rating5'] : $rating5,
+            'rating1_old'           => ! empty( $popular_plugins_old[$popular_plugin->slug]['rating1'] ) ? $popular_plugins_old[$popular_plugin->slug]['rating1'] : $rating1,
+            'active_installs'       => $popular_plugin->active_installs,
+            'active_installs_old'   => ! empty( $popular_plugins_old[$popular_plugin->slug]['active_installs'] ) ? $popular_plugins_old[$popular_plugin->slug]['active_installs'] : $popular_plugin->active_installs,
+            'plugin'                => $popular_plugin
+        ];
+
+        return $popular_plugins_by_username;
+    }
+
+    public function print_link_button( $link = '#', $text = 'Link', $inline_style = '' ) {
+        ?>
+        <a style="<?php echo esc_attr( $inline_style ); ?>" class="btn btn-primary" href="<?php echo esc_url( $link ); ?>" role="button"><?php echo esc_html( $text ); ?></a>
+        <?php 
+    }
+
+    public function plugin_data_test( $popular_plugin, $var_to_print = [] ) {
+        if($popular_plugin->slug === 'embedpress') {
+            echo "<pre>";
+            if ( is_array( $var_to_print ) && count( $var_to_print ) ) {
+                foreach( $var_to_print as $var ) {
+                    print_r($var);
+                }
+            }
+            wp_die('ok');
+        }
+    }
+
     public function print_popular_plugins($popular_plugins)
     {
         if (is_wp_error($popular_plugins)) {
             echo '<pre>' . print_r($popular_plugins->get_error_message(), true) . '</pre>';
         } else {
-            foreach ($popular_plugins as $index => $plugin) {
-                printf('<p>(%d) %d : %s - <a href="%s">%s</a> (%s - %s) - 5 stars: %d, 1 stars: %d</p>', intval($plugin['rank_old']) - intval($plugin['rank']), intval($plugin['rank']), number_format( intval( $plugin['plugin']->active_installs ) ), sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), sanitize_text_field( $plugin['plugin']->name ), sanitize_text_field( $plugin['slug'] ), wp_kses_post( $plugin['plugin']->author ), intval( $plugin['plugin']->ratings['5'] ), intval( $plugin['plugin']->ratings['1'] ) );
-            }
+            ?>
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Active Installs</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">5 Stars</th>
+                    <th scope="col">1 Stars</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php 
+                foreach ($popular_plugins as $index => $plugin) {
+                    // printf('<p>(%d) %d : %s (%s) - <a href="%s">%s</a> (%s - %s) - 5 stars: %d, 1 stars: %d</p>', intval($plugin['rank_old']) - intval($plugin['rank']), intval($plugin['rank']), number_format( intval( $plugin['active_installs'] ) ), number_format( intval($plugin['active_installs']) - intval($plugin['active_installs_old']) ), sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), sanitize_text_field( $plugin['plugin']->name ), sanitize_text_field( $plugin['slug'] ), wp_kses_post( $plugin['plugin']->author ), intval( $plugin['plugin']->ratings['5'] ), intval( $plugin['plugin']->ratings['1'] ) );
+                    ?>                    
+                        <tr>
+                            <th style="font-weight: normal;"><?php printf('(%s) %s', esc_html( intval($plugin['rank_old']) - intval($plugin['rank']) ), esc_html( intval($plugin['rank']) )); ?></th>
+                            <td><?php printf('%s (%s)', esc_html( number_format( intval( $plugin['active_installs'] ) ) ), esc_html( number_format( intval($plugin['active_installs']) - intval($plugin['active_installs_old']) ) )); ?></td>
+                            <td width="25%"><?php printf( '<a href="%s">%s</a> ', sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), wp_trim_words( sanitize_text_field( $plugin['plugin']->name ), 8 ) ); ?></td>
+                            <td width="20%"><?php echo esc_html( sanitize_text_field( $plugin['slug'] ) ); ?></td>
+                            <td width="20%"><?php echo wp_kses_post( $plugin['plugin']->author ); ?></td>
+                            <td><?php printf('%s (%s)', esc_html( intval( $plugin['plugin']->ratings['5'] ) ), esc_html( intval( $plugin['rating5'] ) - intval( $plugin['rating5_old'] ) )); ?></td>
+                            <td><?php printf('%s (%s)', esc_html( intval( $plugin['plugin']->ratings['1'] ) ), esc_html( intval( $plugin['rating1'] ) - intval( $plugin['rating1_old'] ) )); ?></td>
+                        </tr>
+                    <?php 
+                }
+                ?>
+                </tbody>
+            </table>
+            <?php
         }
     }
     
