@@ -42,7 +42,7 @@ class SettingsPage
         ob_start();
 ?>
         <div class="nhrrob-popular-plugins">
-            <div class="nhrrob-popular-plugins-latest">
+            <div class="nhrrob-popular-plugins-latest container">
                 <h1 class="align-center"><?php _e('WordPress Popular Plugins', 'nhrrob-popular-plugins') ?></h1>
                 <div class="alert alert-primary" role="alert">
                     <?php
@@ -51,19 +51,11 @@ class SettingsPage
                     ?>
                     <?php printf(__('Updated %s ago.', 'nhrrob-popular-plugins'), $updated_at); ?>
                 </div>
-                <p class="cache-updated-at-wrap">
-                    <?php $this->print_link_button( admin_url( "admin.php?page={$this->page_slug}" ), __('Reload', 'nhrrob-popular-plugins') ); ?>
-                    <?php $this->print_link_button( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ), __('Clear Cache', 'nhrrob-popular-plugins'), 'float: right;' ); ?>
-                    <?php $prev_page = $page - 1 > 0 ? $page - 1 : 1; ?>
-                    <?php $next_page = $page + 1; ?>
-                    <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}"), __('Prev Page', 'nhrrob-popular-plugins') ); ?>
-                    <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$next_page}"), __('Next Page', 'nhrrob-popular-plugins') ); ?>
-                    <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&all"), __('All Pages', 'nhrrob-popular-plugins') ); ?>
-                </p>
+                <?php $this->print_buttons( $page ); ?>
                 <div class="nhrrob-main-content">
                     <?php
                     if (!empty($popular_plugins)) {
-                        $this->print_popular_plugins($popular_plugins);
+                        $this->print_popular_plugins_table($popular_plugins);
                         $star_ranking_all = 0;
 
                         if(! empty( $_GET['star_ranking'] )){
@@ -145,7 +137,7 @@ class SettingsPage
         $from_to_value = $this->get_api_loop_from_to_value( $loop );
         $from   = ! empty( $from_to_value['from'] ) ? intval( $from_to_value['from'] ) : 1;
         $to     = ! empty( $from_to_value['to'] )   ? intval( $from_to_value['to'] ) : 20;
-
+        $excluded_plugins = $this->get_excluded_plugins_list();
         $popular_plugins_by_username = [];
 
         $transient_name = "{$this->transient_name}_{$loop}";
@@ -158,15 +150,19 @@ class SettingsPage
                 $this->get_plugins_api_args( $page )
             );
             
-            $popular_plugins = !empty($popular_plugins->plugins) ? $popular_plugins->plugins : [];
+            $popular_plugins = ! empty($popular_plugins->plugins) ? $popular_plugins->plugins : [];
 
             foreach ($popular_plugins as $index => $popular_plugin) {
                 $this->popular_plugins_stars[ $popular_plugin->slug ] = $this->prepare_popular_plugin_stars( $popular_plugin );
                 
                 if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
+                    if( in_array( $popular_plugin->slug, $excluded_plugins ) ) {
+                        continue;
+                    }
+
                     $popular_plugins_by_username[ $popular_plugin->slug ] = $this->prepare_popular_plugins_by_username( $popular_plugin, $index, $page, $popular_plugins_old );
                 }
-                // $this->plugin_data_test( $popular_plugin, [ $this->popular_plugins_stars ]);
+                // $this->plugin_data_test( $popular_plugin, [ $this->popular_plugins_stars ], 'disable-feeds');
             }
         }
 
@@ -298,8 +294,39 @@ class SettingsPage
         <?php 
     }
 
-    public function plugin_data_test( $popular_plugin, $var_to_print = [] ) {
-        if($popular_plugin->slug === 'embedpress') {
+    public function print_buttons( $page ){
+        ?>
+        <div class="row align-items-center mb-3">
+            <div class="col">
+                <?php $this->print_link_button( admin_url( "admin.php?page={$this->page_slug}" ), __('Reload', 'nhrrob-popular-plugins') ); ?>
+                <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&all"), __('All Pages', 'nhrrob-popular-plugins') ); ?>
+            </div>
+            <div class="col">
+                <?php $prev_page = $page - 1 > 0 ? $page - 1 : 1; ?>
+                <?php $next_page = $page + 1; ?>
+                <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}"), __('Prev Page', 'nhrrob-popular-plugins') ); ?>
+                <?php $this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$next_page}"), __('Next Page', 'nhrrob-popular-plugins') ); ?>
+            </div>
+            <div class="col">
+                <?php $this->print_link_button( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ), __('Clear Cache', 'nhrrob-popular-plugins'), 'float: right;' ); ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function get_excluded_plugins_list(){
+        // not wpdevteam plugins
+        $excluded_plugins = [
+            'disable-feeds',
+            'wp-conditional-captcha',
+            'wp-410'
+        ];
+
+        return $excluded_plugins;
+    }
+
+    public function plugin_data_test( $popular_plugin, $var_to_print = [], $plugin_slug = 'embedpress' ) {
+        if( $popular_plugin->slug === $plugin_slug ) {
             echo "<pre>";
             if ( is_array( $var_to_print ) && count( $var_to_print ) ) {
                 foreach( $var_to_print as $var ) {
@@ -310,7 +337,7 @@ class SettingsPage
         }
     }
 
-    public function print_popular_plugins($popular_plugins)
+    public function print_popular_plugins_table($popular_plugins)
     {
         if (is_wp_error($popular_plugins)) {
             echo '<pre>' . print_r($popular_plugins->get_error_message(), true) . '</pre>';
@@ -322,7 +349,6 @@ class SettingsPage
                     <th scope="col">Rank</th>
                     <th scope="col">Active Installs</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Slug</th>
                     <th scope="col">Author</th>
                     <th scope="col">5 Stars</th>
                     <th scope="col">1 Stars</th>
@@ -330,17 +356,25 @@ class SettingsPage
                 </thead>
                 <tbody>
                 <?php 
+                $success_class = 'bg-success text-white';
+
                 foreach ($popular_plugins as $index => $plugin) {
+
                     // printf('<p>(%d) %d : %s (%s) - <a href="%s">%s</a> (%s - %s) - 5 stars: %d, 1 stars: %d</p>', intval($plugin['rank_old']) - intval($plugin['rank']), intval($plugin['rank']), number_format( intval( $plugin['active_installs'] ) ), number_format( intval($plugin['active_installs']) - intval($plugin['active_installs_old']) ), sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), sanitize_text_field( $plugin['plugin']->name ), sanitize_text_field( $plugin['slug'] ), wp_kses_post( $plugin['plugin']->author ), intval( $plugin['plugin']->ratings['5'] ), intval( $plugin['plugin']->ratings['1'] ) );
+                    $rank_diff = intval( $plugin['rank_old'] ) - intval( $plugin['rank'] );
+                    $rank_diff_class = $rank_diff > 0 ? $success_class : '';
+                    
+                    $active_installs_diff_raw = intval($plugin['active_installs']) - intval($plugin['active_installs_old']);
+                    $active_installs_diff = number_format( $active_installs_diff_raw );
+                    $active_installs_diff_class = $active_installs_diff_raw > 0 ? $success_class : '';
                     ?>                    
                         <tr>
-                            <th style="font-weight: normal;"><?php printf('(%s) %s', esc_html( intval($plugin['rank_old']) - intval($plugin['rank']) ), esc_html( intval($plugin['rank']) )); ?></th>
-                            <td><?php printf('%s (%s)', esc_html( number_format( intval( $plugin['active_installs'] ) ) ), esc_html( number_format( intval($plugin['active_installs']) - intval($plugin['active_installs_old']) ) )); ?></td>
-                            <td width="25%"><?php printf( '<a href="%s">%s</a> ', sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), wp_trim_words( sanitize_text_field( $plugin['plugin']->name ), 8 ) ); ?></td>
-                            <td width="20%"><?php echo esc_html( sanitize_text_field( $plugin['slug'] ) ); ?></td>
+                            <th class="<?php echo esc_attr( $rank_diff_class ); ?>" style="font-weight: normal;"><?php printf('(%s) %s', esc_html( $rank_diff ), esc_html( intval($plugin['rank']) )); ?></th>
+                            <td class="<?php echo esc_attr( $active_installs_diff_class ); ?>" ><?php printf( '(%s) %s', esc_html( $active_installs_diff ), esc_html( number_format( intval( $plugin['active_installs'] ) ) ) ); ?></td>
+                            <td width="30%"><?php printf( '<a href="%s">%s</a> ', sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), wp_trim_words( sanitize_text_field( $plugin['plugin']->name ), 5 ) ); ?></td>
                             <td width="20%"><?php echo wp_kses_post( $plugin['plugin']->author ); ?></td>
-                            <td><?php printf('%s (%s)', esc_html( intval( $plugin['plugin']->ratings['5'] ) ), esc_html( intval( $plugin['rating5'] ) - intval( $plugin['rating5_old'] ) )); ?></td>
-                            <td><?php printf('%s (%s)', esc_html( intval( $plugin['plugin']->ratings['1'] ) ), esc_html( intval( $plugin['rating1'] ) - intval( $plugin['rating1_old'] ) )); ?></td>
+                            <td><?php printf('(%s) %s', esc_html( intval( $plugin['rating5'] ) - intval( $plugin['rating5_old'] ) ), esc_html( intval( $plugin['plugin']->ratings['5'] ) ) ); ?></td>
+                            <td><?php printf('(%s) %s', esc_html( intval( $plugin['rating1'] ) - intval( $plugin['rating1_old'] ) ), esc_html( intval( $plugin['plugin']->ratings['1'] ) ) ); ?></td>
                         </tr>
                     <?php 
                 }
