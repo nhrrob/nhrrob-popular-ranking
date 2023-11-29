@@ -343,7 +343,7 @@ class SettingsPage
             echo '<pre>' . print_r($popular_plugins->get_error_message(), true) . '</pre>';
         } else {
             ?>
-            <table class="table table-bordered table-responsive">
+            <table class="table table-bordered table-responsive" id="nhrrob-popular-plugins">
                 <thead>
                     <tr>
                     <th scope="col">Rank</th>
@@ -359,6 +359,7 @@ class SettingsPage
                 $success_class = 'bg-success text-white';
                 $danger_class = 'bg-danger text-white';
                 $primary_class = 'bg-primary text-white';
+                $info_class = 'bg-info';
 
                 foreach ($popular_plugins as $index => $plugin) {
 
@@ -381,7 +382,7 @@ class SettingsPage
                         <tr>
                             <th class="<?php echo esc_attr( $rank_diff_class ); ?>" style="font-weight: normal;"><?php printf('(%s) %s', esc_html( $rank_diff ), esc_html( intval($plugin['rank']) )); ?></th>
                             <td class="<?php echo esc_attr( $active_installs_diff_class ); ?>" ><?php printf( '(%s) %s', esc_html( $active_installs_diff ), esc_html( number_format( intval( $plugin['active_installs'] ) ) ) ); ?></td>
-                            <td width="30%"><?php printf( '<a href="%s">%s</a> ', sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), wp_trim_words( sanitize_text_field( $plugin['plugin']->name ), 5 ) ); ?></td>
+                            <td width="30%"><?php printf( '<a href="%s">%s</a> ', sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), wp_trim_words( sanitize_text_field( $plugin['plugin']->name ), 4 ) ); ?></td>
                             <td width="20%"><?php echo wp_kses_post( $plugin['plugin']->author ); ?></td>
                             <td class="<?php echo esc_attr( $stars5_diff_class ); ?>"><?php printf('(%s) %s', esc_html( $stars5_diff ), esc_html( intval( $plugin['plugin']->ratings['5'] ) ) ); ?></td>
                             <td class="<?php echo esc_attr( $stars1_diff_class ); ?>"><?php printf('(%s) %s', esc_html( $stars1_diff ), esc_html( intval( $plugin['plugin']->ratings['1'] ) ) ); ?></td>
