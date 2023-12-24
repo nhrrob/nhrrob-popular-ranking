@@ -162,6 +162,8 @@ class SettingsPage
         return $popular_plugins_by_username;
     }
 
+    // https://dd32.id.au/projects/wordpressorg-plugin-information-api-docs/
+    // https://wordpress.org/support/wp-admin/edit-tags.php?taxonomy=topic-plugin&post_type=topic
     public function plugins_api($action, $args = null)
     {
         if (is_array($args))
