@@ -2,11 +2,16 @@
 
 namespace Nhrrob\NhrrobPopularPlugins\Admin;
 
+use Nhrrob\NhrrobPopularPlugins\Controllers\RankingController;
+use Nhrrob\NhrrobPopularPlugins\Services\PluginRanking;
+use Nhrrob\NhrrobPopularPlugins\Traits\GlobalTrait;
+
 /**
  * The Menu handler class
  */
 class SettingsPage
 {
+    use GlobalTrait;
 
     protected $page_slug;
 
@@ -15,15 +20,18 @@ class SettingsPage
     protected $transient_name;
 
     protected $popular_plugins_stars;
+
+    protected $rankingController;
     /**
      * Initialize the class
      */
-    function __construct()
+    public function __construct()
     {
         $this->page_slug = 'nhrrob-popular-plugins';
         $this->username = 'wpdevteam';
         $this->transient_name = "{$this->username}_popular_plugins";
         $this->popular_plugins_stars = get_option('nhrrob_popular_plugins_stars');
+        $this->rankingController = new RankingController();
     }
 
     /**
@@ -105,7 +113,7 @@ class SettingsPage
         if ( empty($popular_plugins) || $cache_clear ) {
             update_option($transient_name . '_fetched_at', current_time('U'));
 
-            $popular_plugins = $this->api($page); // fetches all 5000 popular plugins
+            $popular_plugins = $this->rankingController->api($page); // fetches all 5000 popular plugins
 
             set_transient($transient_name, $popular_plugins, 30 * 24 * 3600);
             uksort($this->popular_plugins_stars, function ($key1, $key2) {
@@ -123,167 +131,6 @@ class SettingsPage
         }
 
         return $popular_plugins;
-    }
-
-    public function api($loop = 1)
-    {
-        $from_to_value = $this->get_api_loop_from_to_value( $loop );
-        $from   = ! empty( $from_to_value['from'] ) ? intval( $from_to_value['from'] ) : 1;
-        $to     = ! empty( $from_to_value['to'] )   ? intval( $from_to_value['to'] ) : 20;
-        $excluded_plugins = $this->get_excluded_plugins_list();
-        $popular_plugins_by_username = [];
-
-        $transient_name = "{$this->transient_name}_{$loop}";
-        $popular_plugins_old = get_transient($transient_name);
-
-        // Top 5000 Popular Plugins: https://developer.wordpress.org/reference/functions/plugins_api/
-        for ($page = $from; $page <= $to; $page++) {
-            $popular_plugins = $this->plugins_api(
-                'query_plugins',
-                $this->get_plugins_api_args( $page )
-            );
-            
-            $popular_plugins = ! empty($popular_plugins->plugins) ? $popular_plugins->plugins : [];
-
-            foreach ($popular_plugins as $index => $popular_plugin) {
-                $this->popular_plugins_stars[ $popular_plugin->slug ] = $this->prepare_popular_plugin_stars( $popular_plugin, $popular_plugins_old );
-                
-                if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
-                    if( in_array( $popular_plugin->slug, $excluded_plugins ) ) {
-                        continue;
-                    }
-
-                    $popular_plugins_by_username[ $popular_plugin->slug ] = $this->prepare_popular_plugins_by_username( $popular_plugin, $index, $page, $popular_plugins_old );
-                }
-                // $this->plugin_data_test( $popular_plugin, [ $this->popular_plugins_stars ], 'elementor');
-            }
-        }
-        
-        return $popular_plugins_by_username;
-    }
-
-    // https://dd32.id.au/projects/wordpressorg-plugin-information-api-docs/
-    // https://wordpress.org/support/wp-admin/edit-tags.php?taxonomy=topic-plugin&post_type=topic
-    public function plugins_api($action, $args = null)
-    {
-        if (is_array($args))
-            $args = (object)$args;
-
-        if (!isset($args->per_page))
-            $args->per_page = 24;
-
-        $args = apply_filters('plugins_api_args', $args, $action);
-        $res = apply_filters('plugins_api', false, $action, $args);
-        if (false === $res) {
-            $url = 'http://api.wordpress.org/plugins/info/1.0/';
-            if (wp_http_supports(array('ssl')))
-                $url = set_url_scheme($url, 'https');
-            $request = wp_remote_post($url, array(
-                'timeout' => 15,
-                'body' => array(
-                    'action' => $action,
-                    'request' => serialize($args)
-                )
-            ));
-            if (is_wp_error($request)) {
-                $res = new \WP_Error('plugins_api_failed', __('An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.'), $request->get_error_message());
-            } else {
-                $res = maybe_unserialize(wp_remote_retrieve_body($request));
-                if (!is_object($res) && !is_array($res))
-                    $res = new \WP_Error('plugins_api_failed', __('An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="http://wordpress.org/support/">support forums</a>.'), wp_remote_retrieve_body($request));
-            }
-        } elseif (!is_wp_error($res)) {
-            $res->external = true;
-        }
-        return apply_filters('plugins_api_result', $res, $action, $args);
-    }
-
-    public function get_plugins_api_args( $page = 1 ){
-        $args = array(
-            'browse' => 'popular',
-            'page' => $page,
-            'per_page' => 250,
-            'fields' => array(
-                'downloaded' => false,
-                'rating' => false,
-                'description' => false,
-                'short_description' => false,
-                'donate_link' => false,
-                'tags' => false,
-                'sections' => false,
-                'homepage' => false,
-                'added' => false,
-                'last_updated' => false,
-                'compatibility' => false,
-                'tested' => false,
-                'requires' => false,
-                'downloadlink' => true,
-                'requires_plugins' => false,
-                'versions' => false,
-                'screenshots' => false,
-                'active_installs' => true,
-            )
-        );
-
-        return $args;
-    }
-
-    public function get_api_loop_from_to_value( $loop ){
-        $from = 1;
-        $to = 20;
-
-        if (intval($loop) && $loop >= 1 && $loop <= 20) {
-            $from = 20 * ($loop - 1) + 1;
-            $to = $from + 19;
-        }
-
-        $from_to_value = [
-            'from' => $from,
-            'to' => $to,
-        ];
-
-        return $from_to_value;
-    }
-
-    public function prepare_popular_plugin_stars( $popular_plugin, $popular_plugin_old ){
-        if ( isset( $popular_plugin->ratings['5'] ) ) {
-            $popular_plugins_stars = [
-                'name' => $popular_plugin->name,
-                'slug' => $popular_plugin->slug,
-                'active_installs' => $popular_plugin->active_installs,
-                'author_profile' => $popular_plugin->author_profile,
-                // 'author' => $popular_plugin->author,
-                'rating5' => $popular_plugin->ratings['5'],
-                'rating1' => $popular_plugin->ratings['1'],
-            ];
-        }
-
-        if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
-            $popular_plugins_stars['plugin'] = $popular_plugin;
-        }
-
-        return ! empty( $popular_plugins_stars ) ? $popular_plugins_stars : [];
-    }
-    
-    public function prepare_popular_plugins_by_username( $popular_plugin, $index, $page, $popular_plugins_old ){
-        $rank = (250 * ($page - 1)) + ($index + 1);
-        $rating5 = ! empty( $popular_plugin->ratings['5'] ) ? $popular_plugin->ratings['5'] : 0;
-        $rating1 = ! empty( $popular_plugin->ratings['1'] ) ? $popular_plugin->ratings['1'] : 0;
-
-        $popular_plugins_by_username = [
-            'slug'                  => $popular_plugin->slug,
-            'rank'                  => $rank,
-            'rank_old'              => ! empty( $popular_plugins_old[$popular_plugin->slug]['rank'] ) ? $popular_plugins_old[$popular_plugin->slug]['rank'] : $rank,
-            'rating5'               => $rating5,
-            'rating1'               => $rating1,
-            'rating5_old'           => ! empty( $popular_plugins_old[$popular_plugin->slug]['rating5'] ) ? $popular_plugins_old[$popular_plugin->slug]['rating5'] : $rating5,
-            'rating1_old'           => ! empty( $popular_plugins_old[$popular_plugin->slug]['rating1'] ) ? $popular_plugins_old[$popular_plugin->slug]['rating1'] : $rating1,
-            'active_installs'       => $popular_plugin->active_installs,
-            'active_installs_old'   => ! empty( $popular_plugins_old[$popular_plugin->slug]['active_installs'] ) ? $popular_plugins_old[$popular_plugin->slug]['active_installs'] : $popular_plugin->active_installs,
-            'plugin'                => $popular_plugin
-        ];
-
-        return $popular_plugins_by_username;
     }
 
     public function print_link_button( $link = '#', $text = 'Link', $inline_style = '' ) {
@@ -310,29 +157,6 @@ class SettingsPage
             </div>
         </div>
         <?php
-    }
-
-    public function get_excluded_plugins_list(){
-        // not wpdevteam plugins
-        $excluded_plugins = [
-            'disable-feeds',
-            'wp-conditional-captcha',
-            'wp-410'
-        ];
-
-        return $excluded_plugins;
-    }
-
-    public function plugin_data_test( $popular_plugin, $var_to_print = [], $plugin_slug = 'embedpress' ) {
-        if( 'https://wordpress.org/plugins/' . $popular_plugin->slug . '/' === $plugin_slug ) {
-            echo "<pre>";
-            if ( is_array( $var_to_print ) && count( $var_to_print ) ) {
-                foreach( $var_to_print as $var ) {
-                    print_r($var);
-                }
-            }
-            wp_die('ok');
-        }
     }
 
     public function print_popular_plugins_table($popular_plugins)
@@ -495,14 +319,5 @@ class SettingsPage
             </tbody>
         </table>
         <?php 
-    }
-}
-
-
-if( ! function_exists( 'nhrrob_dd' ) ){
-    function nhrrob_dd( $var ) {
-        echo "<pre>";
-        print_r($var);
-        wp_die('ok');
     }
 }
