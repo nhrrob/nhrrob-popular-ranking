@@ -57,7 +57,7 @@
             <tr>
                 <th style="font-weight: normal;"><?php printf('%d', intval($counter)); ?></th>
                 <td><?php printf('%s', esc_html(number_format(!empty($plugin_stars['active_installs']) ? intval($plugin_stars['active_installs']) : 0))); ?></td>
-                <td width="30%"><?php printf('<a href="%s">%s</a> ', sanitize_url("https://wordpress.org/plugins/{$plugin_stars['slug']}"), wp_trim_words(!empty($plugin_stars['name']) ? sanitize_text_field($plugin_stars['name']) : '', 4)); ?></td>
+                <td width="30%"><?php printf('<a target="_blank" href="%s">%s</a> ', sanitize_url("https://wordpress.org/plugins/{$plugin_stars['slug']}"), wp_trim_words(!empty($plugin_stars['name']) ? sanitize_text_field($plugin_stars['name']) : '', 4)); ?></td>
                 <td width="20%"><?php echo wp_kses_post($author_profile); ?></td>
                 <td><?php printf('%s', esc_html(intval($plugin_stars['rating5']))); ?></td>
                 <td><?php printf('%s', esc_html(intval($plugin_stars['rating1']))); ?></td>
