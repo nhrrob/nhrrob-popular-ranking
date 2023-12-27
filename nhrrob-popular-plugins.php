@@ -65,6 +65,8 @@ final class Nhrrob_Popular_Plugins {
         define( 'RESLAB_POPULAR_PLUGINS_PATH', __DIR__ );
         define( 'RESLAB_POPULAR_PLUGINS_URL', plugins_url( '', RESLAB_POPULAR_PLUGINS_FILE ) );
         define( 'RESLAB_POPULAR_PLUGINS_ASSETS', RESLAB_POPULAR_PLUGINS_URL . '/assets' );
+        define( 'NHRROB_POPULAR_PLUGINS_INCLUDES_PATH', RESLAB_POPULAR_PLUGINS_PATH . '/includes' );
+        define( 'NHRROB_POPULAR_PLUGINS_VIEWS_PATH', NHRROB_POPULAR_PLUGINS_INCLUDES_PATH . '/views' );
     }
 
     /**
