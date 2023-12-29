@@ -47,8 +47,8 @@ class Assets {
                 'version' => filemtime( RESLAB_POPULAR_PLUGINS_PATH . '/assets/css/frontend.css' )
             ],
             'nhrrob-popular-plugins-admin-style' => [
-                'src'     => RESLAB_POPULAR_PLUGINS_ASSETS . '/css/admin.css',
-                'version' => filemtime( RESLAB_POPULAR_PLUGINS_PATH . '/assets/css/admin.css' )
+                'src'     => RESLAB_POPULAR_PLUGINS_ASSETS . '/css/admin.out.css',
+                'version' => filemtime( RESLAB_POPULAR_PLUGINS_PATH . '/assets/css/admin.out.css' )
             ],
             'nhrrob-popular-plugins-bootstrap' => [
                 'src'     => '//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',

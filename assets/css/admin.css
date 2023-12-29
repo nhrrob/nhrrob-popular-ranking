@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .nhrrob-popular-plugins {
     width: 80%;
     margin: auto;

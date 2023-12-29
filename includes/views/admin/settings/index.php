@@ -2,10 +2,10 @@
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
     <div class="nhrrob-popular-plugins">
-        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <!-- <h1><?php //echo esc_html(get_admin_page_title()); ?></h1> -->
 
         <div class="nhrrob-popular-plugins-latest container">
-            <h1 class="align-center"><?php _e('WordPress Popular Plugins', 'nhrrob-popular-plugins') ?></h1>
+            <h1 class="align-center text-3xl font-bold underline"><?php _e('WordPress Popular Plugins', 'nhrrob-popular-plugins') ?></h1>
             <div class="alert alert-primary" role="alert">
                 <?php
                 $updated_at = get_option($transient_name . '_fetched_at');

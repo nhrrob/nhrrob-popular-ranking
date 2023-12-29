@@ -1,2 +1,11 @@
+.sass-cache
 .DS_Store
+.phpintel
+./gulpfile.js
+package-lock.json
+pnpm-lock.yaml
+composer.lock
+/node_modules
+.idea/*
+pnpm-lock.yaml
 vendor
