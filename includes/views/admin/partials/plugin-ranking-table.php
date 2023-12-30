@@ -16,12 +16,12 @@
             </h5>
         </div>
         <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-            <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            <a type="button" href="<?php echo esc_url( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ) ); ?>" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                 </svg>
-                Cache Clear
-            </button>
+                <?php esc_html_e('Cache Clear', 'nhrrob-popular-plugins'); ?>
+            </a>
         </div>
     </div>
     <div class="overflow-x-auto">
@@ -38,10 +38,10 @@
             </thead>
             <tbody>
                 <?php
-                $success_class = 'bg-success text-white';
-                $danger_class = 'bg-danger text-white';
-                $primary_class = 'bg-primary text-white';
-                $info_class = 'bg-info';
+                $success_class  = 'text-green-500';
+                $danger_class   = 'text-red-500';
+                $primary_class  = 'text-blue-500';
+                $info_class     = 'text-indigo-500';
 
                 foreach ($popular_plugins as $index => $plugin) {
 
@@ -62,12 +62,12 @@
                     $stars1_diff_class  = $stars1_diff > 0 ? $danger_class : '';
                 ?>
                     <tr class="border-b dark:border-gray-700">
-                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php printf('(%s) %s', esc_html($rank_diff), esc_html(intval($plugin['rank']))); ?></th>
-                        <td class="px-4 py-3"><?php printf('(%s) %s', esc_html($active_installs_diff), esc_html(number_format(intval($plugin['active_installs'])))); ?></td>
+                        <th scope="row" class="<?php echo esc_attr( $rank_diff_class ); ?> px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php printf('(%s) %s', esc_html($rank_diff), esc_html(intval($plugin['rank']))); ?></th>
+                        <td class="<?php echo esc_attr( $active_installs_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s+', esc_html($active_installs_diff), esc_html($this->shortNumber(intval($plugin['active_installs'])))); ?></td>
                         <td class="px-4 py-3"><?php printf('<a target="_blank" href="%s">%s</a> ', sanitize_url("https://wordpress.org/plugins/{$plugin['slug']}"), wp_trim_words(sanitize_text_field($plugin['plugin']->name), 4)); ?></td>
                         <td class="px-4 py-3"><?php echo wp_kses_post($plugin['plugin']->author); ?></td>
-                        <td class="px-4 py-3"><?php printf('(%s) %s', esc_html($stars5_diff), esc_html(intval($plugin['plugin']->ratings['5']))); ?></td>
-                        <td class="px-4 py-3"><?php printf('(%s) %s', esc_html($stars1_diff), esc_html(intval($plugin['plugin']->ratings['1']))); ?></td>
+                        <td class="<?php echo esc_attr( $stars5_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s', esc_html($stars5_diff), esc_html(intval($plugin['plugin']->ratings['5']))); ?></td>
+                        <td class="<?php echo esc_attr( $stars1_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s', esc_html($stars1_diff), esc_html(intval($plugin['plugin']->ratings['1']))); ?></td>
                     </tr>
                 <?php
                 }
