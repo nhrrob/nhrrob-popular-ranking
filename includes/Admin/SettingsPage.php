@@ -60,13 +60,6 @@ class SettingsPage extends Page
     {
 
         if ( is_array($this->popular_plugins_stars) && count($this->popular_plugins_stars) ) {
-            echo "<h1>Popular Plugins by Stars</h1>";
-            ?>
-            <p class="">
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}")); ?>"><?php _e('Refresh', 'nhrrob-popular-plugins'); ?></a>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&star_ranking=all")); ?>"><?php _e('All Plugins', 'nhrrob-popular-plugins'); ?></a>
-            </p>
-            <?php 
             $this->print_popular_plugins_by_stars_table( $all );
         }
     }
