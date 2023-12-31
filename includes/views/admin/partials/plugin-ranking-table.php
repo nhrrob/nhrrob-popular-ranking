@@ -1,6 +1,6 @@
 <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mt-5">
     <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-        <div class="flex items-center flex-1 space-x-4">
+        <div class="flex items-center space-x-4">
             <h5>
                 <?php
                 $page = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
@@ -15,6 +15,10 @@
                 <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), __('ago.', 'nhrrob-popular-plugins')); ?></span>
             </h5>
         </div>
+        <div class="flex items-center flex-1 space-x-4">
+            <input class="m-auto w-3/6 npp-username-input" type="text" name="username" placeholder="nhrrob" value="<?php echo ! empty( $_GET['username'] ) ? sanitize_text_field( $_GET['username'] ) : ''; ?>">
+        </div>
+        
         <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
             <a type="button" href="<?php echo esc_url( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ) ); ?>" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

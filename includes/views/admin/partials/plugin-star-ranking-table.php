@@ -64,7 +64,7 @@
                                 continue;
                             }
 
-                            $author_profile = $plugin_stars['plugin']->author;
+                            $author_profile = ! empty( $plugin_stars['plugin'] ) ? $plugin_stars['plugin']->author : '';
                         }
 
                         // $rank_diff          = intval( $plugin['rank_old'] ) - intval( $plugin['rank'] );
