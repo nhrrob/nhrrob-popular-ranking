@@ -16,7 +16,7 @@
             <?php $this->print_buttons($page); ?>
             <div class="nhrrob-main-content">
                 <?php
-                if (!empty($popular_plugins)) {
+                // if (! empty($popular_plugins) ) {
                     $this->print_popular_plugins_table($popular_plugins);
                     $star_ranking_all = 0;
 
@@ -25,7 +25,7 @@
                     }
 
                     $this->print_popular_plugins_by_stars($star_ranking_all);
-                }
+                // }
                 ?>
             </div>
         </div>

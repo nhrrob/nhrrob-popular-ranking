@@ -51,7 +51,7 @@
 
                     // printf('<p>(%d) %d : %s (%s) - <a href="%s">%s</a> (%s - %s) - 5 stars: %d, 1 stars: %d</p>', intval($plugin['rank_old']) - intval($plugin['rank']), intval($plugin['rank']), number_format( intval( $plugin['active_installs'] ) ), number_format( intval($plugin['active_installs']) - intval($plugin['active_installs_old']) ), sanitize_url( "https://wordpress.org/plugins/{$plugin['slug']}" ), sanitize_text_field( $plugin['plugin']->name ), sanitize_text_field( $plugin['slug'] ), wp_kses_post( $plugin['plugin']->author ), intval( $plugin['plugin']->ratings['5'] ), intval( $plugin['plugin']->ratings['1'] ) );
                     $rank_diff          = intval($plugin['rank_old']) - intval($plugin['rank']);
-                    $rank_diff_class    = $rank_diff > 0 ? $success_class : '';
+                    $rank_diff_class    = $rank_diff > 0 ? $success_class : 'text-gray-900';
                     $rank_diff_class    = $rank_diff > 20 ? $primary_class : $rank_diff_class;
                     $rank_diff_class    = $rank_diff < -20 ? $danger_class : $rank_diff_class;
 
@@ -66,7 +66,7 @@
                     $stars1_diff_class  = $stars1_diff > 0 ? $danger_class : '';
                 ?>
                     <tr class="border-b dark:border-gray-700">
-                        <th scope="row" class="<?php echo esc_attr( $rank_diff_class ); ?> px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php printf('(%s) %s', esc_html($rank_diff), esc_html(intval($plugin['rank']))); ?></th>
+                        <th scope="row" class="<?php echo esc_attr( $rank_diff_class ); ?> px-4 py-3 font-medium whitespace-nowrap dark:text-white"><?php printf('(%s) %s', esc_html($rank_diff), esc_html(intval($plugin['rank']))); ?></th>
                         <td class="<?php echo esc_attr( $active_installs_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s+', esc_html($active_installs_diff), esc_html($this->shortNumber(intval($plugin['active_installs'])))); ?></td>
                         <td class="px-4 py-3"><?php printf('<a target="_blank" href="%s">%s</a> ', sanitize_url("https://wordpress.org/plugins/{$plugin['slug']}"), wp_trim_words(sanitize_text_field($plugin['plugin']->name), 4)); ?></td>
                         <td class="px-4 py-3"><?php echo wp_kses_post($plugin['plugin']->author); ?></td>
@@ -80,12 +80,15 @@
         </table>
     </div>
     <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-        <!-- <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+        <?php if ( count( $popular_plugins ) ) : ?>
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
             Showing
-            <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
+            <span class="font-semibold text-gray-900 dark:text-white"><?php echo (10 * ($page - 1) + 1) .'-'. 10 * $page;?></span>
             of
-            <span class="font-semibold text-gray-900 dark:text-white">1000</span>
-        </span> -->
+            <span class="font-semibold text-gray-900 dark:text-white"><?php echo count($popular_plugins); ?></span>
+        </span>
+        <?php endif; ?>
+        
         <ul class="inline-flex items-stretch -space-x-px">
             <?php $prev_page = $page - 1 > 0 ? $page - 1 : 1; ?>
             <?php $next_page = $page + 1; ?>
