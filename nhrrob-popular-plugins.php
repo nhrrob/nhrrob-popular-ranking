@@ -111,5 +111,13 @@ function nhrrob_popular_plugins() {
     return Nhrrob_Popular_Plugins::init();
 }
 
-//call the plugin
+//Call the plugin
 nhrrob_popular_plugins();
+
+//Hide admmin notices
+function nhrrob_hide_admin_notices(){
+    remove_all_actions('user_admin_notices');
+    remove_all_actions('admin_notices');
+}
+
+add_action('in_admin_header', 'nhrrob_hide_admin_notices', 99);
