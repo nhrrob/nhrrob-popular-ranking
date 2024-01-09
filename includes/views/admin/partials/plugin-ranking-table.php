@@ -81,7 +81,7 @@
     </div>
     <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
         <?php if ( count( $popular_plugins ) ) : ?>
-        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400 hidden">
             Showing
             <span class="font-semibold text-gray-900 dark:text-white"><?php echo (10 * ($page - 1) + 1) .'-'. 10 * $page;?></span>
             of

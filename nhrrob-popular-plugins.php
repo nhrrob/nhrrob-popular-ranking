@@ -116,8 +116,12 @@ nhrrob_popular_plugins();
 
 //Hide admmin notices
 function nhrrob_hide_admin_notices(){
-    remove_all_actions('user_admin_notices');
-    remove_all_actions('admin_notices');
+    $current_screen = get_current_screen();
+
+    if ($current_screen && $current_screen->id === 'toplevel_page_nhrrob-popular-plugins') {
+        remove_all_actions('user_admin_notices');
+        remove_all_actions('admin_notices');
+    }
 }
 
 add_action('in_admin_header', 'nhrrob_hide_admin_notices', 99);
