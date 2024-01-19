@@ -4,7 +4,7 @@ Tags: popular plugins, plugin analytics
 Requires at least: 5.0
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.0.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -31,7 +31,7 @@ Yes. Feel free to use with any of your favorite themes.
 
 == Changelog ==
 
-= 1.2.0 - 19/01/2024 =
+= 1.0.0 - 19/01/2024 =
 
 - Initial stable release
 

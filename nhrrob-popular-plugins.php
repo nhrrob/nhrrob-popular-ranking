@@ -5,7 +5,7 @@
  * Plugin URI: https://www.nazmulrobin.com/
  * Author: NHR Popular Plugins
  * Author URI: https://www.nazmulrobin.com/
- * Version: 1.2.0
+ * Version: 1.0.0
  * License: GPLv3
  * License URI: https://opensource.org/licenses/GPL-3.0
  */
@@ -26,7 +26,7 @@ final class Nhrrob_Popular_Plugins {
      *
      * @var string
      */
-    const version = '1.2.0';
+    const version = '1.0.0';
 
     /**
      * Class construcotr
