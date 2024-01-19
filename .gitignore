@@ -8,4 +8,3 @@ composer.lock
 /node_modules
 .idea/*
 pnpm-lock.yaml
-vendor
