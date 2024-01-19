@@ -2,12 +2,12 @@
 /**
  * Plugin Name: NHR Popular Plugins
  * Description: WordPress Popular Plugins
- * Plugin URI: https://www.resiliencelab.us/
+ * Plugin URI: https://www.nazmulrobin.com/
  * Author: NHR Popular Plugins
- * Author URI: https://www.resiliencelab.us/
- * Version: 1.0.0
- * License: GPL2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Author URI: https://www.nazmulrobin.com/
+ * Version: 1.2.0
+ * License: GPLv3
+ * License URI: https://opensource.org/licenses/GPL-3.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ final class Nhrrob_Popular_Plugins {
      *
      * @var string
      */
-    const version = '1.0.0';
+    const version = '1.2.0';
 
     /**
      * Class construcotr
