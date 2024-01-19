@@ -27,7 +27,7 @@ class Installer {
             update_option( 'nhrrob_popular_plugins_installed', time() );
         }
 
-        update_option( 'nhrrob_popular_plugins_version', RESLAB_POPULAR_PLUGINS_VERSION );
+        update_option( 'nhrrob_popular_plugins_version', NHRROB_POPULAR_PLUGINS_VERSION );
     }
 
     /**

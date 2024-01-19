@@ -60,12 +60,12 @@ final class Nhrrob_Popular_Plugins {
      * @return void
      */
     public function define_constants() {
-        define( 'RESLAB_POPULAR_PLUGINS_VERSION', self::version );
-        define( 'RESLAB_POPULAR_PLUGINS_FILE', __FILE__ );
-        define( 'RESLAB_POPULAR_PLUGINS_PATH', __DIR__ );
-        define( 'RESLAB_POPULAR_PLUGINS_URL', plugins_url( '', RESLAB_POPULAR_PLUGINS_FILE ) );
-        define( 'RESLAB_POPULAR_PLUGINS_ASSETS', RESLAB_POPULAR_PLUGINS_URL . '/assets' );
-        define( 'NHRROB_POPULAR_PLUGINS_INCLUDES_PATH', RESLAB_POPULAR_PLUGINS_PATH . '/includes' );
+        define( 'NHRROB_POPULAR_PLUGINS_VERSION', self::version );
+        define( 'NHRROB_POPULAR_PLUGINS_FILE', __FILE__ );
+        define( 'NHRROB_POPULAR_PLUGINS_PATH', __DIR__ );
+        define( 'NHRROB_POPULAR_PLUGINS_URL', plugins_url( '', NHRROB_POPULAR_PLUGINS_FILE ) );
+        define( 'NHRROB_POPULAR_PLUGINS_ASSETS', NHRROB_POPULAR_PLUGINS_URL . '/assets' );
+        define( 'NHRROB_POPULAR_PLUGINS_INCLUDES_PATH', NHRROB_POPULAR_PLUGINS_PATH . '/includes' );
         define( 'NHRROB_POPULAR_PLUGINS_VIEWS_PATH', NHRROB_POPULAR_PLUGINS_INCLUDES_PATH . '/views' );
     }
 
