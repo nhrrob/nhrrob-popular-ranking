@@ -24,7 +24,7 @@ class Menu
     public function admin_menu()
     {
         $parent_slug = 'nhrrob-popular-plugins';
-        $capability = 'manage_options';
+        $capability = apply_filters('nhrrob-popular-plugins/menu/capability', 'manage_options');
 
         $hook = add_menu_page(__('Popular Plugins', 'nhrrob-popular-plugins'), __('Popular Plugins', 'nhrrob-popular-plugins'), $capability, $parent_slug, [$this, 'settings_page'], 'dashicons-admin-post');
         // add_submenu_page( $parent_slug, __( 'Resource Book', 'nhrrob-popular-plugins' ), __( 'Resource Book', 'nhrrob-popular-plugins' ), $capability, $parent_slug, [ $this, 'plugin_page' ] );
