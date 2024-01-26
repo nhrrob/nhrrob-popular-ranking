@@ -37,9 +37,9 @@ class SettingsPage extends Page
         $page = $page >= 1 && $page <= 20 ? $page : 1;
         $transient_name = "{$this->transient_name}_{$page}";
         
-        if ( isset( $_GET['cache_clear'] ) ) {
-            wp_safe_redirect( esc_url_raw( remove_query_arg('cache_clear') ) );
-        }
+        // if ( isset( $_GET['cache_clear'] ) ) {
+        //     wp_safe_redirect( esc_url_raw( remove_query_arg('cache_clear') ) );
+        // }
 
         ob_start();
 		include NHRROB_POPULAR_PLUGINS_VIEWS_PATH . '/admin/settings/index.php';
