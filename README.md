@@ -1,2 +1,2 @@
-# wp-plugin-template
+# nhrrob-popular-plugins
 

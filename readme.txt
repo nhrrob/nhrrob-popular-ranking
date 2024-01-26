@@ -1,6 +1,6 @@
-=== NHR Popular Plugins ===
+=== NHR RankMaster Pro - WordPress Popular Plugin Ranking & Review Insights ===
 Contributors: nhrrob
-Tags: popular plugins, plugin analytics
+Tags: popular plugins, plugin analytics, wordpress analytics, plugin insights, wordpress ranking, plugin reviews, star ratings, wordpress optimization, plugin trends, decision-making.
 Requires at least: 5.0
 Tested up to: 6.4
 Requires PHP: 7.4
@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
-WordPress Popular Plugins
+NHR RankMaster Pro - WordPress Popular Plugin Ranking & Review Insights
 
 == Description ==
 
-Want to know how your plugins are doing? Get active installation and 5 star based rating and stay up to date.
+Empower Your Site with NHR RankMaster Pro — Unleashing In-Depth WordPress Plugin Rankings and Reviews for Smarter Decision-Making.
 
 == Installation ==
 

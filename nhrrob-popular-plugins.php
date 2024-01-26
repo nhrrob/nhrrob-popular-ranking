@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: NHR Popular Plugins
- * Description: WordPress Popular Plugins
+ * Plugin Name: NHR RankMaster Pro - WordPress Popular Plugin Ranking & Review Insights
+ * Description: Empower Your Site with NHR RankMaster Pro — Unleashing In-Depth WordPress Plugin Rankings and Reviews for Smarter Decision-Making.
  * Plugin URI: https://www.nazmulrobin.com/
- * Author: NHR Popular Plugins
+ * Author: Nazmul Hasan Robin
  * Author URI: https://www.nazmulrobin.com/
  * Version: 1.0.0
  * License: GPLv3
