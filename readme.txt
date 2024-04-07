@@ -28,6 +28,8 @@ Yes. Feel free to use with any of your favorite themes.
 
 == Screenshots ==
 
+1. WordPress plugin ranking by popular category
+2. WordPress plugin ranking by 5 stars
 
 == Changelog ==
 
