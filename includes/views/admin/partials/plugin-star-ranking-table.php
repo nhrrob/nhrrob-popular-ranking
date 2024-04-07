@@ -1,5 +1,5 @@
 <div class="mt-10">
-    <h1 class="align-center text-3xl font-bold underline"><?php _e('Popular Plugins By Stars', 'nhrrob-popular-ranking') ?></h1>
+    <h1 class="align-center text-3xl font-bold underline"><?php esc_html_e('Popular Plugins By Stars', 'nhrrob-popular-ranking') ?></h1>
 
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mt-5">
         <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
@@ -15,7 +15,7 @@
                     $updated_at = human_time_diff($updated_at, current_time('U'));
                     ?>
                     <span class="text-gray-500"><?php echo esc_html__('Updated:', 'nhrrob-popular-ranking'); ?></span>
-                    <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), __('ago.', 'nhrrob-popular-ranking')); ?></span>
+                    <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), esc_html__('ago.', 'nhrrob-popular-ranking')); ?></span>
                 </h5>
             </div>
             <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
@@ -89,7 +89,7 @@
                                                     ?> px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php printf('%d', intval($counter)); ?></th>
                             <td class="<?php //echo esc_attr( $active_installs_diff_class ); 
                                         ?> px-4 py-3"><?php printf('%s+', esc_html($this->shortNumber(!empty($plugin_stars['active_installs']) ? intval($plugin_stars['active_installs']) : 0))); ?></td>
-                            <td class="px-4 py-3"><?php printf('<a target="_blank" href="%s">%s</a> ', sanitize_url("https://wordpress.org/plugins/{$plugin_stars['slug']}"), wp_trim_words(!empty($plugin_stars['name']) ? sanitize_text_field($plugin_stars['name']) : '', 4)); ?></td>
+                            <td class="px-4 py-3"><?php printf('<a target="_blank" href="%s">%s</a> ', esc_html( sanitize_url("https://wordpress.org/plugins/{$plugin_stars['slug']}") ), esc_html( wp_trim_words(!empty($plugin_stars['name']) ) ? esc_html( sanitize_text_field($plugin_stars['name']) ) : '', 4)); ?></td>
                             <td class="px-4 py-3"><?php echo wp_kses_post($author_profile); ?></td>
                             <td class="<?php //echo esc_attr( $stars5_diff_class ); 
                                         ?> px-4 py-3"><?php printf('%s', esc_html(intval($plugin_stars['rating5']))); ?></td>

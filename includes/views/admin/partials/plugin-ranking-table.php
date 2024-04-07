@@ -12,11 +12,11 @@
                 $updated_at = human_time_diff($updated_at, current_time('U'));
                 ?>
                 <span class="text-gray-500"><?php echo esc_html__('Updated:', 'nhrrob-popular-ranking'); ?></span>
-                <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), __('ago.', 'nhrrob-popular-ranking')); ?></span>
+                <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), esc_html__('ago.', 'nhrrob-popular-ranking')); ?></span>
             </h5>
         </div>
         <div class="flex items-center flex-1 space-x-4">
-            <input class="m-auto w-3/6 npp-username-input" type="text" name="username" placeholder="nhrrob" value="<?php echo ! empty( $_GET['username'] ) ? sanitize_text_field( $_GET['username'] ) : ''; ?>">
+            <input class="m-auto w-3/6 npp-username-input" type="text" name="username" placeholder="nhrrob" value="<?php echo ! empty( $_GET['username'] ) ? esc_html( sanitize_text_field( $_GET['username'] ) ) : ''; ?>">
         </div>
         
         <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
@@ -68,7 +68,7 @@
                     <tr class="border-b dark:border-gray-700">
                         <th scope="row" class="<?php echo esc_attr( $rank_diff_class ); ?> px-4 py-3 font-medium whitespace-nowrap dark:text-white"><?php printf('(%s) %s', esc_html($rank_diff), esc_html(intval($plugin['rank']))); ?></th>
                         <td class="<?php echo esc_attr( $active_installs_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s+', esc_html($active_installs_diff), esc_html($this->shortNumber(intval($plugin['active_installs'])))); ?></td>
-                        <td class="px-4 py-3"><?php printf('<a target="_blank" href="%s">%s</a> ', sanitize_url("https://wordpress.org/plugins/{$plugin['slug']}"), wp_trim_words(sanitize_text_field($plugin['plugin']->name), 4)); ?></td>
+                        <td class="px-4 py-3"><?php printf('<a target="_blank" href="%s">%s</a> ', esc_html( sanitize_url("https://wordpress.org/plugins/{$plugin['slug']}") ), esc_html( wp_trim_words(sanitize_text_field($plugin['plugin']->name), 4)) ); ?></td>
                         <td class="px-4 py-3"><?php echo wp_kses_post($plugin['plugin']->author); ?></td>
                         <td class="<?php echo esc_attr( $stars5_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s', esc_html($stars5_diff), esc_html(intval($plugin['plugin']->ratings['5']))); ?></td>
                         <td class="<?php echo esc_attr( $stars1_diff_class ); ?> px-4 py-3"><?php printf('(%s) %s', esc_html($stars1_diff), esc_html(intval($plugin['plugin']->ratings['1']))); ?></td>
@@ -83,9 +83,9 @@
         <?php if ( count( $popular_plugins ) ) : ?>
         <span class="text-sm font-normal text-gray-500 dark:text-gray-400 hidden">
             Showing
-            <span class="font-semibold text-gray-900 dark:text-white"><?php echo (10 * ($page - 1) + 1) .'-'. 10 * $page;?></span>
+            <span class="font-semibold text-gray-900 dark:text-white"><?php echo esc_html((10 * ($page - 1) + 1) .'-'. 10 * $page );?></span>
             of
-            <span class="font-semibold text-gray-900 dark:text-white"><?php echo count($popular_plugins); ?></span>
+            <span class="font-semibold text-gray-900 dark:text-white"><?php echo esc_html( count($popular_plugins) ); ?></span>
         </span>
         <?php endif; ?>
         

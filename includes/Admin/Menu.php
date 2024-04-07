@@ -46,7 +46,7 @@ class Menu
         $settings_page->view();
         $content = ob_get_clean();
         
-        echo $content;
+        echo wp_kses_post( $content );
     }
 
     /**
