@@ -1,8 +1,8 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Admin;
+namespace Nhrrob\NhrrobPopularRanking\Admin;
 
-use Nhrrob\NhrrobPopularPlugins\App;
+use Nhrrob\NhrrobPopularRanking\App;
 
 /**
  * Page Class

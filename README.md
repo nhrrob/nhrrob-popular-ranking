@@ -1,2 +1,2 @@
-# nhrrob-popular-plugins
+# nhrrob-popular-ranking
 

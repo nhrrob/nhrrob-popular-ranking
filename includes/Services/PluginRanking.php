@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Services;
+namespace Nhrrob\NhrrobPopularRanking\Services;
 
 /**
  * Plugin Ranking Class

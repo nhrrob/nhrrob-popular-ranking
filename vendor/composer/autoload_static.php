@@ -13,12 +13,12 @@ class ComposerStaticInitfc8a7e93c5c41a18391c91eafa88ceaf
     public static $prefixLengthsPsr4 = array (
         'N' => 
         array (
-            'Nhrrob\\NhrrobPopularPlugins\\' => 28,
+            'Nhrrob\\NhrrobPopularRanking\\' => 28,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Nhrrob\\NhrrobPopularPlugins\\' => 
+        'Nhrrob\\NhrrobPopularRanking\\' => 
         array (
             0 => __DIR__ . '/../..' . '/includes',
         ),

@@ -1,10 +1,10 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Admin;
+namespace Nhrrob\NhrrobPopularRanking\Admin;
 
-use Nhrrob\NhrrobPopularPlugins\Controllers\RankingController;
-use Nhrrob\NhrrobPopularPlugins\Services\PluginRanking;
-use Nhrrob\NhrrobPopularPlugins\Traits\GlobalTrait;
+use Nhrrob\NhrrobPopularRanking\Controllers\RankingController;
+use Nhrrob\NhrrobPopularRanking\Services\PluginRanking;
+use Nhrrob\NhrrobPopularRanking\Traits\GlobalTrait;
 
 /**
  * The Menu handler class
@@ -42,7 +42,7 @@ class SettingsPage extends Page
         // }
 
         ob_start();
-		include NHRROB_POPULAR_PLUGINS_VIEWS_PATH . '/admin/settings/index.php';
+		include NHRROB_POPULAR_RANKING_VIEWS_PATH . '/admin/settings/index.php';
         $content = ob_get_clean();
         echo $content;
     }
@@ -52,7 +52,7 @@ class SettingsPage extends Page
         if (is_wp_error($popular_plugins)) {
             echo '<pre>' . print_r($popular_plugins->get_error_message(), true) . '</pre>';
         } else {
-		    include NHRROB_POPULAR_PLUGINS_VIEWS_PATH . '/admin/partials/plugin-ranking-table.php';
+		    include NHRROB_POPULAR_RANKING_VIEWS_PATH . '/admin/partials/plugin-ranking-table.php';
         }
     }
     
@@ -66,6 +66,6 @@ class SettingsPage extends Page
 
     public function print_popular_plugins_by_stars_table( $all = 0 )
     {
-		include NHRROB_POPULAR_PLUGINS_VIEWS_PATH . '/admin/partials/plugin-star-ranking-table.php';
+		include NHRROB_POPULAR_RANKING_VIEWS_PATH . '/admin/partials/plugin-star-ranking-table.php';
     }
 }

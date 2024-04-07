@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins;
+namespace Nhrrob\NhrrobPopularRanking;
 
 /**
  * Frontend handler class

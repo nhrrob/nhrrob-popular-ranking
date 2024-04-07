@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Admin;
+namespace Nhrrob\NhrrobPopularRanking\Admin;
 
 /**
  * The Menu handler class
@@ -23,12 +23,12 @@ class Menu
      */
     public function admin_menu()
     {
-        $parent_slug = 'nhrrob-popular-plugins';
-        $capability = apply_filters('nhrrob-popular-plugins/menu/capability', 'manage_options');
+        $parent_slug = 'nhrrob-popular-ranking';
+        $capability = apply_filters('nhrrob-popular-ranking/menu/capability', 'manage_options');
 
-        $hook = add_menu_page(__('Popular Plugins', 'nhrrob-popular-plugins'), __('Popular Plugins', 'nhrrob-popular-plugins'), $capability, $parent_slug, [$this, 'settings_page'], 'dashicons-admin-post');
-        // add_submenu_page( $parent_slug, __( 'Resource Book', 'nhrrob-popular-plugins' ), __( 'Resource Book', 'nhrrob-popular-plugins' ), $capability, $parent_slug, [ $this, 'plugin_page' ] );
-        // add_submenu_page( $parent_slug, __( 'Settings', 'nhrrob-popular-plugins' ), __( 'Settings', 'nhrrob-popular-plugins' ), $capability, 'nhrrob-popular-plugins-settings', [ $this, 'settings_page' ] );
+        $hook = add_menu_page(__('Popular Plugins', 'nhrrob-popular-ranking'), __('Popular Plugins', 'nhrrob-popular-ranking'), $capability, $parent_slug, [$this, 'settings_page'], 'dashicons-admin-post');
+        // add_submenu_page( $parent_slug, __( 'Resource Book', 'nhrrob-popular-ranking' ), __( 'Resource Book', 'nhrrob-popular-ranking' ), $capability, $parent_slug, [ $this, 'plugin_page' ] );
+        // add_submenu_page( $parent_slug, __( 'Settings', 'nhrrob-popular-ranking' ), __( 'Settings', 'nhrrob-popular-ranking' ), $capability, 'nhrrob-popular-ranking-settings', [ $this, 'settings_page' ] );
 
         add_action('admin_head-' . $hook, [$this, 'enqueue_assets']);
     }
@@ -56,8 +56,8 @@ class Menu
      */
     public function enqueue_assets()
     {
-        wp_enqueue_style('nhrrob-popular-plugins-admin-style');
-        // wp_enqueue_style('nhrrob-popular-plugins-bootstrap');
-        wp_enqueue_script('nhrrob-popular-plugins-admin-script');
+        wp_enqueue_style('nhrrob-popular-ranking-admin-style');
+        // wp_enqueue_style('nhrrob-popular-ranking-bootstrap');
+        wp_enqueue_script('nhrrob-popular-ranking-admin-script');
     }
 }

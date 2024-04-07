@@ -1,8 +1,8 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Controllers;
+namespace Nhrrob\NhrrobPopularRanking\Controllers;
 
-use Nhrrob\NhrrobPopularPlugins\App;
+use Nhrrob\NhrrobPopularRanking\App;
 
 /**
  * Controller Class

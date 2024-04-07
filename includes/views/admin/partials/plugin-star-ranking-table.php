@@ -1,5 +1,5 @@
 <div class="mt-10">
-    <h1 class="align-center text-3xl font-bold underline"><?php _e('Popular Plugins By Stars', 'nhrrob-popular-plugins') ?></h1>
+    <h1 class="align-center text-3xl font-bold underline"><?php _e('Popular Plugins By Stars', 'nhrrob-popular-ranking') ?></h1>
 
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mt-5">
         <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
@@ -14,8 +14,8 @@
                     $updated_at = get_option($transient_name . '_fetched_at');
                     $updated_at = human_time_diff($updated_at, current_time('U'));
                     ?>
-                    <span class="text-gray-500"><?php echo esc_html__('Updated:', 'nhrrob-popular-plugins'); ?></span>
-                    <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), __('ago.', 'nhrrob-popular-plugins')); ?></span>
+                    <span class="text-gray-500"><?php echo esc_html__('Updated:', 'nhrrob-popular-ranking'); ?></span>
+                    <span class="dark:text-white"><?php printf('%s %s', esc_html($updated_at), __('ago.', 'nhrrob-popular-ranking')); ?></span>
                 </h5>
             </div>
             <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
@@ -23,7 +23,7 @@
                     <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
-                    <?php esc_html_e('Cache Clear', 'nhrrob-popular-plugins'); ?>
+                    <?php esc_html_e('Cache Clear', 'nhrrob-popular-ranking'); ?>
                 </a>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Traits;
+namespace Nhrrob\NhrrobPopularRanking\Traits;
 
 trait RankingTrait {
 
@@ -84,17 +84,17 @@ trait RankingTrait {
         ?>
         <div class="row align-items-center mb-3">
             <div class="col">
-                <?php //$this->print_link_button( admin_url( "admin.php?page={$this->page_slug}" ), __('Reload', 'nhrrob-popular-plugins') ); ?>
-                <?php //$this->print_link_button( admin_url("admin.php?page={$this->page_slug}&all"), __('All Pages', 'nhrrob-popular-plugins') ); ?>
+                <?php //$this->print_link_button( admin_url( "admin.php?page={$this->page_slug}" ), __('Reload', 'nhrrob-popular-ranking') ); ?>
+                <?php //$this->print_link_button( admin_url("admin.php?page={$this->page_slug}&all"), __('All Pages', 'nhrrob-popular-ranking') ); ?>
             </div>
             <div class="col">
                 <?php $prev_page = $page - 1 > 0 ? $page - 1 : 1; ?>
                 <?php $next_page = $page + 1; ?>
-                <?php //$this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}"), __('Prev Page', 'nhrrob-popular-plugins') ); ?>
-                <?php //$this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$next_page}"), __('Next Page', 'nhrrob-popular-plugins') ); ?>
+                <?php //$this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}"), __('Prev Page', 'nhrrob-popular-ranking') ); ?>
+                <?php //$this->print_link_button( admin_url("admin.php?page={$this->page_slug}&paged={$next_page}"), __('Next Page', 'nhrrob-popular-ranking') ); ?>
             </div>
             <div class="col">
-                <?php //$this->print_link_button( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ), __('Clear Cache', 'nhrrob-popular-plugins'), '' ); ?>
+                <?php //$this->print_link_button( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&cache_clear" ), __('Clear Cache', 'nhrrob-popular-ranking'), '' ); ?>
             </div>
         </div>
         <?php

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Traits;
+namespace Nhrrob\NhrrobPopularRanking\Traits;
 
 trait GlobalTrait
 {

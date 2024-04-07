@@ -1,17 +1,17 @@
 <div class="wrap">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 
-    <div class="nhrrob-popular-plugins text-base">
+    <div class="nhrrob-popular-ranking text-base">
         <!-- <h1><?php //echo esc_html(get_admin_page_title()); ?></h1> -->
 
-        <div class="nhrrob-popular-plugins-latest container">
-            <h1 class="align-center text-3xl font-bold underline"><?php _e('WordPress Popular Plugins', 'nhrrob-popular-plugins') ?></h1>
+        <div class="nhrrob-popular-ranking-latest container">
+            <h1 class="align-center text-3xl font-bold underline"><?php _e('WordPress Popular Plugins', 'nhrrob-popular-ranking') ?></h1>
             <div class="alert alert-primary" role="alert">
                 <?php
                 $updated_at = get_option($transient_name . '_fetched_at');
                 $updated_at = human_time_diff($updated_at, current_time('U'));
                 ?>
-                <?php //printf(__('Updated %s ago.', 'nhrrob-popular-plugins'), $updated_at); ?>
+                <?php //printf(__('Updated %s ago.', 'nhrrob-popular-ranking'), $updated_at); ?>
             </div>
             <?php $this->print_buttons($page); ?>
             <div class="nhrrob-main-content">

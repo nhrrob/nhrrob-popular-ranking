@@ -1,9 +1,9 @@
 <?php
 
-namespace Nhrrob\NhrrobPopularPlugins\Controllers;
+namespace Nhrrob\NhrrobPopularRanking\Controllers;
 
-use Nhrrob\NhrrobPopularPlugins\Services\PluginRanking;
-use Nhrrob\NhrrobPopularPlugins\Traits\GlobalTrait;
+use Nhrrob\NhrrobPopularRanking\Services\PluginRanking;
+use Nhrrob\NhrrobPopularRanking\Traits\GlobalTrait;
 
 /**
  * Controller Class
@@ -62,7 +62,7 @@ class RankingController extends Controller {
                 return ($rating1 > $rating2) ? -1 : 1;
             });
             
-            update_option( 'nhrrob_popular_plugins_stars', $this->popular_plugins_stars );
+            update_option( 'nhrrob_popular_ranking_stars', $this->popular_plugins_stars );
         }
 
         return $popular_plugins;

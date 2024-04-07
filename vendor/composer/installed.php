@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'nhrrob/nhrrob-popular-plugins',
+        'name' => 'nhrrob/nhrrob-popular-ranking',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
         'reference' => '7a9f9d080c026e4da036a944916b1bcfadd00164',
@@ -10,7 +10,7 @@
         'dev' => true,
     ),
     'versions' => array(
-        'nhrrob/nhrrob-popular-plugins' => array(
+        'nhrrob/nhrrob-popular-ranking' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
             'reference' => '7a9f9d080c026e4da036a944916b1bcfadd00164',

@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Nhrrob\\NhrrobPopularPlugins\\' => array($baseDir . '/includes'),
+    'Nhrrob\\NhrrobPopularRanking\\' => array($baseDir . '/includes'),
 );

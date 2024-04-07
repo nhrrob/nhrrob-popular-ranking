@@ -925,32 +925,32 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.nhrrob-popular-plugins {
+.nhrrob-popular-ranking {
   width: 80%;
   margin: auto;
 }
 
-.nhrrob-popular-plugins .align-center {
+.nhrrob-popular-ranking .align-center {
   text-align: center;
 }
 
-.nhrrob-popular-plugins .align-left {
+.nhrrob-popular-ranking .align-left {
   text-align: left;
 }
 
-.nhrrob-popular-plugins .align-right {
+.nhrrob-popular-ranking .align-right {
   text-align: right;
 }
 
-.nhrrob-popular-plugins .nhrrob-popular-plugins-old {
+.nhrrob-popular-ranking .nhrrob-popular-ranking-old {
   padding-top: 100px;
 }
 
-.nhrrob-popular-plugins .updated-at {
+.nhrrob-popular-ranking .updated-at {
   float: right;
 }
 
-.nhrrob-popular-plugins .d-none {
+.nhrrob-popular-ranking .d-none {
   display: none;
 }
 
