@@ -18,6 +18,10 @@
                     $this->print_popular_plugins_table($popular_plugins);
                     $star_ranking_all = 0;
 
+                    if ( isset( $_GET['paged'] ) ){
+                        check_admin_referer('nhrrob-ranking-pagination-nonce');
+                    }
+                    
                     if (!empty($_GET['star_ranking'])) {
                         $star_ranking_all = 'all' === sanitize_text_field($_GET['star_ranking']) ? 1 : $star_ranking_all;
                     }

@@ -33,6 +33,10 @@ class SettingsPage extends Page
     {
         $popular_plugins =$this->rankingController->getPopularRanking();
 
+        if ( isset( $_GET['paged'] ) ){
+            check_admin_referer('nhrrob-ranking-pagination-nonce');
+        }
+
         $page = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
         $page = $page >= 1 && $page <= 20 ? $page : 1;
         $transient_name = "{$this->transient_name}_{$page}";

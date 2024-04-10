@@ -3,6 +3,10 @@
         <div class="flex items-center space-x-4">
             <h5>
                 <?php
+                if ( isset( $_GET['paged'] ) ){
+                    check_admin_referer('nhrrob-ranking-pagination-nonce');
+                }
+
                 $page = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
                 $page = $page >= 1 && $page <= 20 ? $page : 1;
                 ?>
@@ -20,7 +24,7 @@
         </div>
         
         <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-            <a type="button" href="<?php echo esc_url( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&username={$this->username}&cache_clear" ) ); ?>" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            <a type="button" href="<?php echo esc_url( wp_nonce_url( admin_url( "admin.php?page={$this->page_slug}&paged={$page}&username={$this->username}&cache_clear" ), 'nhrrob-ranking-pagination-nonce' ) ); ?>" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                 </svg>
@@ -93,7 +97,7 @@
             <?php $prev_page = $page - 1 > 0 ? $page - 1 : 1; ?>
             <?php $next_page = $page + 1; ?>
             <li>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}&username={$this->username}")); ?>" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url("admin.php?page={$this->page_slug}&paged={$prev_page}&username={$this->username}"), 'nhrrob-ranking-pagination-nonce' ) ); ?>" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     <span class="sr-only">Previous</span>
                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -101,22 +105,22 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged=1&username={$this->username}")); ?>" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url("admin.php?page={$this->page_slug}&paged=1&username={$this->username}"), 'nhrrob-ranking-pagination-nonce' ) ); ?>" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
             </li>
             <li>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged=2&username={$this->username}")); ?>" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url("admin.php?page={$this->page_slug}&paged=2&username={$this->username}"), 'nhrrob-ranking-pagination-nonce' ) ); ?>" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
             </li>
             <li>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged=3&username={$this->username}")); ?>" aria-current="page" class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url("admin.php?page={$this->page_slug}&paged=3&username={$this->username}"), 'nhrrob-ranking-pagination-nonce' ) ); ?>" aria-current="page" class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
             </li>
             <li>
                 <a href="#" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
             </li>
             <li>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&all&username={$this->username}")); ?>" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">All</a>
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url("admin.php?page={$this->page_slug}&all&username={$this->username}"), 'nhrrob-ranking-pagination-nonce' ) ); ?>" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">All</a>
             </li>
             <li>
-                <a href="<?php echo esc_url(admin_url("admin.php?page={$this->page_slug}&paged={$next_page}&username={$this->username}")); ?>" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <a href="<?php echo esc_url( wp_nonce_url( admin_url("admin.php?page={$this->page_slug}&paged={$next_page}&username={$this->username}"), 'nhrrob-ranking-pagination-nonce' ) ); ?>" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                     <span class="sr-only">Next</span>
                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />

@@ -1,6 +1,6 @@
 === NHR Popular Ranking ===
 Contributors: nhrrob
-Tags: popular plugins, plugin analytics, wordpress analytics, plugin insights, wordpress ranking, plugin reviews, star ratings, wordpress optimization, plugin trends, decision-making.
+Tags: popular plugins, plugin analytics, wordpress analytics, plugin insights, wordpress ranking
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
