@@ -2,11 +2,14 @@
 
 namespace Nhrrob\NhrrobPopularRanking\Admin;
 
+use Nhrrob\NhrrobPopularRanking\Traits\GlobalTrait;
+
 /**
  * The Menu handler class
  */
 class Menu
 {
+    use GlobalTrait;
 
     /**
      * Initialize the class
@@ -46,7 +49,7 @@ class Menu
         $settings_page->view();
         $content = ob_get_clean();
         
-        echo wp_kses_post( $content );
+        echo wp_kses( $content, $this->allowed_html() );
     }
 
     /**
