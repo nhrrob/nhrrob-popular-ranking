@@ -4,7 +4,7 @@
  * Plugin URI: http://wordpress.org/plugins/nhrrob-popular-ranking/
  * Description: Empower Your Site with NHR Popular Ranking — Unleashing In-Depth WordPress Plugin Rankings and Reviews for Smarter Decision-Making.
  * Author: Nazmul Hasan Robin
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: nhrrob-popular-ranking
@@ -26,7 +26,7 @@ final class Nhrrob_Popular_Ranking {
      *
      * @var string
      */
-    const version = '1.0.0';
+    const version = '1.0.1';
 
     /**
      * Class construcotr

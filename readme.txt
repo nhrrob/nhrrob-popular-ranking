@@ -4,7 +4,7 @@ Tags: popular plugins, plugin analytics, wordpress analytics, plugin insights, w
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,8 +71,10 @@ When you have plugins which are not listed in the popular plugins ranking provid
 
 == Changelog ==
 
-= 1.0.0 - 19/01/2024 =
+= 1.0.1 - 10/04/2024 =
+- PCP errors fixed
 
+= 1.0.0 - 19/01/2024 =
 - Initial stable release
 
 
