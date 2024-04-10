@@ -7,6 +7,7 @@
 
         let url = new URL(window.location.href);
         url.searchParams.set("username", username);
+        url.searchParams.set("_wpnonce", nhrrobPopularRanking.nonce);
         window.location.href = url.href;
     });
 })(jQuery);

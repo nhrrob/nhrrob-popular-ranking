@@ -18,6 +18,10 @@ class RankingController extends Controller {
 
     public function getPopularRanking()
     {
+        if ( isset( $_GET['paged'] ) ){
+            check_admin_referer('nhrrob-ranking-pagination-nonce');
+        }
+        
         $cache_clear = isset($_GET['cache_clear']) ? true : false;
         $all_pages = isset($_GET['all']) ? 1 : 0;
         $page = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
