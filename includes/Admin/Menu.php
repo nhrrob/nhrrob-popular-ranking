@@ -60,7 +60,6 @@ class Menu
     public function enqueue_assets()
     {
         wp_enqueue_style('nhrrob-popular-ranking-admin-style');
-        // wp_enqueue_style('nhrrob-popular-ranking-bootstrap');
         wp_enqueue_script('nhrrob-popular-ranking-admin-script');
     }
 }

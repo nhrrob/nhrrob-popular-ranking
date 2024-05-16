@@ -4,7 +4,7 @@ Tags: popular plugins, plugin analytics, wordpress analytics, plugin insights, w
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ NHR Popular Ranking
 
 == Description ==
 
-Empower Your Site with NHR RankMaster Pro — Unleashing In-Depth WordPress Plugin Rankings and Reviews for Smarter Decision-Making.
+Empower Your Site with NHR Popular Ranking — Unleashing In-Depth WordPress Plugin Rankings and Reviews for Smarter Decision-Making.
 
 ## Configuration
 ### Plugin Settings
@@ -25,9 +25,6 @@ There is a search bar to provide username. You can provide any username to see t
 ### Popular Plugins Table
 In the popular plugins table you can see a list of popular plugins ranked by WordPress. In this table we display rank, active installs, name, author, 5 stars and 1 star.
 Also on each cache clear action we provide rank difference with useful coloring where red means decrease and green means increase. Blue means massive improvement in the rank. Also showing the same for 5 stars as well.
-
-### Popular Plugins by 5 Stars Table
-In the popular plugins by 5 stars table we rank all plugins based on the 5 stars count. This rank is not provided by WordPress. Instead we create a rank based on the current 5 stars of all plugins. In this way you get a clear idea of user satisfaction for each plugin.
 
 == Installation ==
 
@@ -51,10 +48,6 @@ No. It works as a standalone. And it is very lite.
 Yes. That's what this plugin is doing. We display all of your plugins with ranking in
 a table. Gives you an easy way to see the improvements and make decisions.
 
-= How does star ranking work? =
-
-It ranks plugins based on their 5 stars.
-
 = Taking time on first load =
 
 Yes, it fetches data on the first load. Then we cache everything. We have plans to use cron jobs soon.
@@ -67,9 +60,11 @@ When you have plugins which are not listed in the popular plugins ranking provid
 == Screenshots ==
 
 1. WordPress plugin ranking by popular category
-2. WordPress plugin ranking by 5 stars
 
 == Changelog ==
+
+= 1.1.0 - 16/05/2024 =
+- Stars ranking feature removed
 
 = 1.0.1 - 10/04/2024 =
 - PCP errors fixed

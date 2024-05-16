@@ -59,17 +59,4 @@ class SettingsPage extends Page
 		    include NHRROB_POPULAR_RANKING_VIEWS_PATH . '/admin/partials/plugin-ranking-table.php';
         }
     }
-    
-    public function print_popular_plugins_by_stars($all = 0)
-    {
-
-        if ( is_array($this->popular_plugins_stars) && count($this->popular_plugins_stars) ) {
-            $this->print_popular_plugins_by_stars_table( $all );
-        }
-    }
-
-    public function print_popular_plugins_by_stars_table( $all = 0 )
-    {
-		include NHRROB_POPULAR_RANKING_VIEWS_PATH . '/admin/partials/plugin-star-ranking-table.php';
-    }
 }

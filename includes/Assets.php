@@ -50,10 +50,6 @@ class Assets {
                 'src'     => NHRROB_POPULAR_RANKING_ASSETS . '/css/admin.out.css',
                 'version' => filemtime( NHRROB_POPULAR_RANKING_PATH . '/assets/css/admin.out.css' )
             ],
-            'nhrrob-popular-ranking-bootstrap' => [
-                'src'     => '//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
-                'version' => false,
-            ],
         ];
     }
 

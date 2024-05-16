@@ -55,41 +55,9 @@ class RankingController extends Controller {
             $popular_plugins = $this->getApiDataFromService($page); // fetches all 5000 popular plugins
 
             set_transient($transient_name, $popular_plugins, 30 * 24 * 3600);
-            uksort($this->popular_plugins_stars, function ($key1, $key2) {
-                $rating1 = $this->popular_plugins_stars[$key1]['rating5'];
-                $rating2 = $this->popular_plugins_stars[$key2]['rating5'];
-                
-                if ($rating1 === $rating2) {
-                    return 0;
-                }
-                
-                return ($rating1 > $rating2) ? -1 : 1;
-            });
-            
-            update_option( 'nhrrob_popular_ranking_stars', $this->popular_plugins_stars );
         }
 
         return $popular_plugins;
-    }
-
-    public function getPopularStarRanking( $popular_plugin, $popular_plugin_old) {
-        if ( isset( $popular_plugin->ratings['5'] ) ) {
-            $popular_plugins_stars = [
-                'name' => $popular_plugin->name,
-                'slug' => $popular_plugin->slug,
-                'active_installs' => $popular_plugin->active_installs,
-                'author_profile' => $popular_plugin->author_profile,
-                // 'author' => $popular_plugin->author,
-                'rating5' => $popular_plugin->ratings['5'],
-                'rating1' => $popular_plugin->ratings['1'],
-            ];
-        }
-
-        if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
-            $popular_plugins_stars['plugin'] = $popular_plugin;
-        }
-
-        return ! empty( $popular_plugins_stars ) ? $popular_plugins_stars : [];
     }
 
     public function getApiDataFromService($loop = 1)
@@ -114,8 +82,6 @@ class RankingController extends Controller {
             $popular_plugins = ! empty($popular_plugins->plugins) ? $popular_plugins->plugins : [];
 
             foreach ($popular_plugins as $index => $popular_plugin) {
-                $this->popular_plugins_stars[ $popular_plugin->slug ] = $this->getPopularStarRanking( $popular_plugin, $popular_plugins_old );
-                
                 if ($popular_plugin->author_profile == "https://profiles.wordpress.org/{$this->username}/") {
                     if( in_array( $popular_plugin->slug, $excluded_plugins ) ) {
                         continue;
